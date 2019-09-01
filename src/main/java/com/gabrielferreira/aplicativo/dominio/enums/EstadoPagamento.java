@@ -1,14 +1,14 @@
 package com.gabrielferreira.aplicativo.dominio.enums;
 
-public enum TipoCliente {
-
-    PESSOAFISICA(1, "Pessoa Física"),
-    PESSOAJURIDICA(2, "Pessoa Jurídica");
+public enum EstadoPagamento {
+    PENDENTE(1, "Pendente"),
+    QUITADO(2, "Quitado"),
+    CANCELADO(3, "Cancelado");
 
     private int codigo;
     private String descricao;
 
-    private TipoCliente(int codigo, String descricao) {
+    private EstadoPagamento(int codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
@@ -21,13 +21,13 @@ public enum TipoCliente {
         return descricao;
     }
 
-    public static TipoCliente converterParaEnum(Integer codigo) {
+    public static EstadoPagamento converterParaEnum(Integer codigo, String descricao) {
 
         if (codigo == null) {
             return null;
         }
 
-        for (TipoCliente i : TipoCliente.values()) {
+        for (EstadoPagamento i : EstadoPagamento.values()) {
             if (codigo.equals(i.getCodigo())) {
                 return i;
             }
