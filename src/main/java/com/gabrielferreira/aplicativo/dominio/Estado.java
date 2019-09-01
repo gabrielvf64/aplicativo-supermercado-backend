@@ -1,5 +1,6 @@
 package com.gabrielferreira.aplicativo.dominio;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +33,8 @@ public class Estado implements Serializable {
         this.nome = nome;
     }
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "estado")
     public List<Cidade> getCidades() {
         return cidades;
     }

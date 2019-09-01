@@ -1,5 +1,6 @@
 package com.gabrielferreira.aplicativo.dominio;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gabrielferreira.aplicativo.dominio.enums.TipoCliente;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Cliente implements Serializable {
     private String cpfOuCnpj;
     private Integer tipoCliente;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 

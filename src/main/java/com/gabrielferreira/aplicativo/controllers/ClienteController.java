@@ -1,7 +1,7 @@
 package com.gabrielferreira.aplicativo.controllers;
 
-import com.gabrielferreira.aplicativo.dominio.Categoria;
-import com.gabrielferreira.aplicativo.services.CategoriaService;
+import com.gabrielferreira.aplicativo.dominio.Cliente;
+import com.gabrielferreira.aplicativo.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/categorias")
-public class CategoriaController {
+@RequestMapping(value = "/clientes")
+public class ClienteController {
 
     @Autowired
-    private CategoriaService categoriaService;
+    private ClienteService clienteService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> obter(@PathVariable Integer id) {
-        Categoria categoria = categoriaService.obter(id);
-        return ResponseEntity.ok().body(categoria);
+        Cliente cliente = clienteService.obter(id);
+        return ResponseEntity.ok().body(cliente);
     }
 }
