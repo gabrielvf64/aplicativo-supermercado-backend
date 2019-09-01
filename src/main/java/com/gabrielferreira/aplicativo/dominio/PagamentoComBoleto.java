@@ -4,8 +4,10 @@ import com.gabrielferreira.aplicativo.dominio.enums.EstadoPagamento;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
+@Entity
 @Getter
 @Setter
 public class PagamentoComBoleto extends Pagamento {

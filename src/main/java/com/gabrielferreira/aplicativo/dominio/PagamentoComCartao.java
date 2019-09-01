@@ -4,6 +4,9 @@ import com.gabrielferreira.aplicativo.dominio.enums.EstadoPagamento;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+
+@Entity
 @Getter
 @Setter
 public class PagamentoComCartao extends Pagamento {

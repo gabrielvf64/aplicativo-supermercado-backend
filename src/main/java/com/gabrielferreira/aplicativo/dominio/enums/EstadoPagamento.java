@@ -21,7 +21,7 @@ public enum EstadoPagamento {
         return descricao;
     }
 
-    public static EstadoPagamento converterParaEnum(Integer codigo, String descricao) {
+    public static EstadoPagamento converterParaEnum(Integer codigo) {
 
         if (codigo == null) {
             return null;
