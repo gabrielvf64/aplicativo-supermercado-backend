@@ -3,14 +3,18 @@ package com.gabrielferreira.aplicativo.dominio;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
 @Setter
+@Entity
 public class ItemPedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @EmbeddedId
     private ItemPedidoPK id = new ItemPedidoPK();
 
     private Double desconto;
