@@ -6,9 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -29,6 +27,8 @@ public class Produto implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias = new ArrayList<>();
 
+    private Set<ItemPedido> itens = new HashSet<>();
+
     public Produto() {
     }
 
@@ -39,12 +39,28 @@ public class Produto implements Serializable {
         this.preco = preco;
     }
 
+    public List<Pedido> getPedidos() {
+        List<Pedido> listaDePedidos = new ArrayList<>();
+        for (ItemPedido i : itens) {
+            listaDePedidos.add(i.getPedido());
+        }
+        return listaDePedidos;
+    }
+
     public List<Categoria> getCategorias() {
         return categorias;
     }
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void getItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     @Override

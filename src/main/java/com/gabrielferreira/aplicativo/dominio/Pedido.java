@@ -6,7 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -30,6 +32,8 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoEntrega;
 
+    private Set<ItemPedido> itens = new HashSet<>();
+
     public Pedido() {
     }
 
@@ -46,6 +50,14 @@ public class Pedido implements Serializable {
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void getItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     @Override
