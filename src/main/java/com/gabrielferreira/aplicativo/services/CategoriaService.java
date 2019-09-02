@@ -20,4 +20,9 @@ public class CategoriaService {
                 "O objeto não foi encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()
         ));
     }
+
+    public Categoria criar(Categoria categoria) {
+        categoria.setId(null);
+        return categoriaRepository.save(categoria);
+    }
 }

@@ -4,10 +4,10 @@ import com.gabrielferreira.aplicativo.dominio.Categoria;
 import com.gabrielferreira.aplicativo.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -20,5 +20,13 @@ public class CategoriaController {
     public ResponseEntity<?> obter(@PathVariable Integer id) {
         Categoria categoria = categoriaService.obter(id);
         return ResponseEntity.ok().body(categoria);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> criar(@RequestBody Categoria categoria) {
+        categoria = categoriaService.criar(categoria);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
