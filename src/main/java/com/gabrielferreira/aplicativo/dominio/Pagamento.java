@@ -1,5 +1,6 @@
 package com.gabrielferreira.aplicativo.dominio;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gabrielferreira.aplicativo.dominio.enums.EstadoPagamento;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public abstract class Pagamento implements Serializable {
     private Integer id;
     private Integer estadoPagamento;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
