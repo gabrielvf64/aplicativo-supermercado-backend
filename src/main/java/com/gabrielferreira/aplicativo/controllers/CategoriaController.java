@@ -1,6 +1,7 @@
 package com.gabrielferreira.aplicativo.controllers;
 
 import com.gabrielferreira.aplicativo.dominio.Categoria;
+import com.gabrielferreira.aplicativo.dto.CategoriaResultado;
 import com.gabrielferreira.aplicativo.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -42,5 +45,13 @@ public class CategoriaController {
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         categoriaService.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriaResultado>> obter() {
+        List<Categoria> lista = categoriaService.obter();
+        List<CategoriaResultado> categorias = lista.stream().map(categoria -> new CategoriaResultado(categoria))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(categorias);
     }
 }
