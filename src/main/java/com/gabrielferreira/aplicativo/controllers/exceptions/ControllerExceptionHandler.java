@@ -1,5 +1,6 @@
 package com.gabrielferreira.aplicativo.controllers.exceptions;
 
+import com.gabrielferreira.aplicativo.services.exceptions.DataIntegrityException;
 import com.gabrielferreira.aplicativo.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,15 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
-
-        StandardError erro = new StandardError(HttpStatus.NOT_FOUND.value(),
-                e.getMessage(), System.currentTimeMillis());
+        StandardError erro = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
+                System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+    }
+
+    @ExceptionHandler(DataIntegrityException.class)
+    public ResponseEntity<StandardError> dataIntegrity(DataIntegrityException e, HttpServletRequest request) {
+        StandardError erro = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
+                System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 }
