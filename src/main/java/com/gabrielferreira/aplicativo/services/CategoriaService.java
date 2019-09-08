@@ -1,6 +1,7 @@
 package com.gabrielferreira.aplicativo.services;
 
 import com.gabrielferreira.aplicativo.dominio.Categoria;
+import com.gabrielferreira.aplicativo.dto.CategoriaResultado;
 import com.gabrielferreira.aplicativo.repositories.CategoriaRepository;
 import com.gabrielferreira.aplicativo.services.exceptions.DataIntegrityException;
 import com.gabrielferreira.aplicativo.services.exceptions.ObjectNotFoundException;
@@ -54,5 +55,9 @@ public class CategoriaService {
     public Page<Categoria> obterPagina(Integer page, Integer linesPerPage, String direction, String orderBy) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
         return categoriaRepository.findAll(pageRequest);
+    }
+
+    public Categoria converteDTO(CategoriaResultado categoriaResultado) {
+        return new Categoria(categoriaResultado.getId(), categoriaResultado.getNome());
     }
 }
