@@ -51,6 +51,12 @@ public class AplicativoApplication implements CommandLineRunner {
 
         Categoria categoria1 = new Categoria(null, "Bebidas");
         Categoria categoria2 = new Categoria(null, "Natural");
+        Categoria categoria3 = new Categoria(null, "Açougue");
+        Categoria categoria4 = new Categoria(null, "Laticínios");
+        Categoria categoria5 = new Categoria(null, "Higiene");
+        Categoria categoria6 = new Categoria(null, "Peixaria");
+        Categoria categoria7 = new Categoria(null, "Frutas");
+
 
         Produto produto1 = new Produto(null, "Coca-cola", 5.00);
         Produto produto2 = new Produto(null, "Guaraná", 4.50);
@@ -63,7 +69,8 @@ public class AplicativoApplication implements CommandLineRunner {
         produto2.getCategorias().addAll(Arrays.asList(categoria1));
         produto3.getCategorias().addAll(Arrays.asList(categoria1, categoria2));
 
-        categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2));
+        categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2, categoria3, categoria4, categoria5,
+                categoria6, categoria7));
         produtoRepository.saveAll(Arrays.asList(produto1, produto2, produto3));
 
         Estado estado1 = new Estado(null, "Rio de Janeiro");

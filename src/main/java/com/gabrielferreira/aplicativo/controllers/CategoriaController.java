@@ -4,6 +4,7 @@ import com.gabrielferreira.aplicativo.dominio.Categoria;
 import com.gabrielferreira.aplicativo.dto.CategoriaResultado;
 import com.gabrielferreira.aplicativo.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -52,6 +53,17 @@ public class CategoriaController {
         List<Categoria> lista = categoriaService.obter();
         List<CategoriaResultado> categorias = lista.stream().map(categoria -> new CategoriaResultado(categoria))
                 .collect(Collectors.toList());
+        return ResponseEntity.ok().body(categorias);
+    }
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public ResponseEntity<Page<CategoriaResultado>> obterPagina(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy) {
+        Page<Categoria> list = categoriaService.obterPagina(page, linesPerPage, direction, orderBy);
+        Page<CategoriaResultado> categorias = list.map(categoria -> new CategoriaResultado(categoria));
         return ResponseEntity.ok().body(categorias);
     }
 }
