@@ -1,7 +1,7 @@
 package com.gabrielferreira.aplicativo.controllers;
 
 import com.gabrielferreira.aplicativo.dominio.Categoria;
-import com.gabrielferreira.aplicativo.dto.CategoriaResultado;
+import com.gabrielferreira.aplicativo.dto.CategoriaDTO;
 import com.gabrielferreira.aplicativo.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,8 +28,8 @@ public class CategoriaController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> criar(@Valid @RequestBody CategoriaResultado categoriaResultado) {
-        Categoria categoria = categoriaService.converteDTO(categoriaResultado);
+    public ResponseEntity<Void> criar(@Valid @RequestBody CategoriaDTO categoriaDTO) {
+        Categoria categoria = categoriaService.converteDTO(categoriaDTO);
         categoria = categoriaService.criar(categoria);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId())
                 .toUri();
@@ -37,9 +37,9 @@ public class CategoriaController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> atualizar(@Valid @RequestBody CategoriaResultado categoriaResultado,
+    public ResponseEntity<Void> atualizar(@Valid @RequestBody CategoriaDTO categoriaDTO,
                                           @PathVariable Integer id) {
-        Categoria categoria = categoriaService.converteDTO(categoriaResultado);
+        Categoria categoria = categoriaService.converteDTO(categoriaDTO);
         categoria.setId(id);
         categoria = categoriaService.atualizar(categoria);
         return ResponseEntity.noContent().build();
@@ -53,21 +53,21 @@ public class CategoriaController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<CategoriaResultado>> obter() {
+    public ResponseEntity<List<CategoriaDTO>> obter() {
         List<Categoria> lista = categoriaService.obter();
-        List<CategoriaResultado> categorias = lista.stream().map(categoria -> new CategoriaResultado(categoria))
+        List<CategoriaDTO> categorias = lista.stream().map(categoria -> new CategoriaDTO(categoria))
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(categorias);
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ResponseEntity<Page<CategoriaResultado>> obterPagina(
+    public ResponseEntity<Page<CategoriaDTO>> obterPagina(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
             @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy) {
         Page<Categoria> list = categoriaService.obterPagina(page, linesPerPage, direction, orderBy);
-        Page<CategoriaResultado> categorias = list.map(categoria -> new CategoriaResultado(categoria));
+        Page<CategoriaDTO> categorias = list.map(categoria -> new CategoriaDTO(categoria));
         return ResponseEntity.ok().body(categorias);
     }
 }
