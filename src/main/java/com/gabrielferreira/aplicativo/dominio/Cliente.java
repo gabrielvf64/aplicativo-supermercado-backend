@@ -2,15 +2,11 @@ package com.gabrielferreira.aplicativo.dominio;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabrielferreira.aplicativo.dominio.enums.TipoCliente;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-@Getter
-@Setter
 @Entity
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,7 +39,47 @@ public class Cliente implements Serializable {
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipoCliente = tipoCliente.getCodigo();
+        this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCodigo();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCpfOuCnpj() {
+        return cpfOuCnpj;
+    }
+
+    public void setCpfOuCnpj(String cpfOuCnpj) {
+        this.cpfOuCnpj = cpfOuCnpj;
+    }
+
+    public Integer getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(Integer tipoCliente) {
+        this.tipoCliente = tipoCliente;
     }
 
     public TipoCliente getTipo() {
