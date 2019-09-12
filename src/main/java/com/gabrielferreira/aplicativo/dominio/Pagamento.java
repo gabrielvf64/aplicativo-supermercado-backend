@@ -32,7 +32,7 @@ public abstract class Pagamento implements Serializable {
     public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
         super();
         this.id = id;
-        this.estado = estado.getCodigo();
+        this.estado = (estado == null) ? null : estado.getCodigo();
         this.pedido = pedido;
     }
 
@@ -43,7 +43,7 @@ public abstract class Pagamento implements Serializable {
     public void setEstado(EstadoPagamento estado) {
         this.estado = estado.getCodigo();
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
