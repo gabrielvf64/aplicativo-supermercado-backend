@@ -2,13 +2,16 @@ package com.gabrielferreira.aplicativo.controllers;
 
 import com.gabrielferreira.aplicativo.dominio.Cliente;
 import com.gabrielferreira.aplicativo.dto.ClienteDTO;
+import com.gabrielferreira.aplicativo.dto.ClienteNewDTO;
 import com.gabrielferreira.aplicativo.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +26,15 @@ public class ClienteController {
     public ResponseEntity<Cliente> obter(@PathVariable Integer id) {
         Cliente cliente = clienteService.obter(id);
         return ResponseEntity.ok().body(cliente);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> criar(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
+        Cliente cliente = clienteService.converteDTO(clienteNewDTO);
+        cliente = clienteService.criar(cliente);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
