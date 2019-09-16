@@ -1,14 +1,9 @@
 package com.gabrielferreira.aplicativo.dominio;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
 @Entity
 public class Cidade implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,6 +25,22 @@ public class Cidade implements Serializable {
         this.id = id;
         this.nome = nome;
         this.estado = estado;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     @Override

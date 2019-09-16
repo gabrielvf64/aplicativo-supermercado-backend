@@ -1,16 +1,12 @@
 package com.gabrielferreira.aplicativo.dominio;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
 @Entity
 public class ItemPedido implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -39,13 +35,45 @@ public class ItemPedido implements Serializable {
         return (preco - desconto) * quantidade;
     }
 
+    public Double getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(Double desconto) {
+        this.desconto = desconto;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
     @JsonIgnore
     public Pedido getPedido() {
         return id.getPedido();
     }
 
+    public void setPedido(Pedido pedido) {
+        id.setPedido(pedido);
+    }
+
     public Produto getProduto() {
         return id.getProduto();
+    }
+
+    public void setProduto(Produto produto) {
+        id.setProduto(produto);
     }
 
     @Override

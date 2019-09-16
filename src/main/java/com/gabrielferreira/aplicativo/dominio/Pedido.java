@@ -1,8 +1,6 @@
 package com.gabrielferreira.aplicativo.dominio;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -45,6 +41,38 @@ public class Pedido implements Serializable {
         this.id = id;
         this.dataPedido = dataPedido;
         this.cliente = cliente;
+        this.enderecoEntrega = enderecoEntrega;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getDataPedido() {
+        return dataPedido;
+    }
+
+    public void setDataPedido(Date dataPedido) {
+        this.dataPedido = dataPedido;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Endereco getEnderecoEntrega() {
+        return enderecoEntrega;
+    }
+
+    public void setEnderecoEntrega(Endereco enderecoEntrega) {
         this.enderecoEntrega = enderecoEntrega;
     }
 
