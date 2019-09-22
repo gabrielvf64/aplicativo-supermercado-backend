@@ -5,6 +5,7 @@ import com.gabrielferreira.aplicativo.dominio.enums.EstadoPagamento;
 import com.gabrielferreira.aplicativo.dominio.enums.TipoCliente;
 import com.gabrielferreira.aplicativo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -40,6 +41,9 @@ public class DBService {
 
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder senhaEncodada;
 
     public void instanciarBancoDeTeste() throws ParseException {
 
@@ -104,7 +108,7 @@ public class DBService {
         cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 
         Cliente cliente1 = new Cliente(null, "Gabriel", "gabrielvftestes@gmail.com",
-                "83272792031", TipoCliente.PESSOAFISICA);
+                "83272792031", TipoCliente.PESSOAFISICA, senhaEncodada.encode("123"));
 
         cliente1.getTelefones().addAll(Arrays.asList("26115873", "999887766"));
 
