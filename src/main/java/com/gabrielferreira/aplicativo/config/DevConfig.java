@@ -1,6 +1,8 @@
 package com.gabrielferreira.aplicativo.config;
 
 import com.gabrielferreira.aplicativo.services.DBService;
+import com.gabrielferreira.aplicativo.services.EmailService;
+import com.gabrielferreira.aplicativo.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,5 +30,10 @@ public class DevConfig {
 
         dbService.instanciarBancoDeTeste();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService() {
+        return new SmtpEmailService();
     }
 }
