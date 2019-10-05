@@ -1,6 +1,7 @@
 package com.gabrielferreira.aplicativo.config;
 
 import com.gabrielferreira.aplicativo.seguranca.JWTAuthenticationFilter;
+import com.gabrielferreira.aplicativo.seguranca.JWTAuthorizationFilter;
 import com.gabrielferreira.aplicativo.seguranca.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private Environment env;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private JWTUtil jwtUtil;
 
     @Autowired
-    private JWTUtil jwtUtil;
+    private UserDetailsService userDetailsService;
 
     private static final String[] PUBLIC_MATCHERS = {
             "/h2-console/**"
@@ -56,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
