@@ -3,11 +3,14 @@ package com.gabrielferreira.aplicativo.services;
 import com.gabrielferreira.aplicativo.dominio.Cidade;
 import com.gabrielferreira.aplicativo.dominio.Cliente;
 import com.gabrielferreira.aplicativo.dominio.Endereco;
+import com.gabrielferreira.aplicativo.dominio.enums.Perfil;
 import com.gabrielferreira.aplicativo.dominio.enums.TipoCliente;
 import com.gabrielferreira.aplicativo.dto.ClienteDTO;
 import com.gabrielferreira.aplicativo.dto.ClienteNewDTO;
 import com.gabrielferreira.aplicativo.repositories.ClienteRepository;
 import com.gabrielferreira.aplicativo.repositories.EnderecoRepository;
+import com.gabrielferreira.aplicativo.seguranca.Usuario;
+import com.gabrielferreira.aplicativo.services.exceptions.AuthorizationException;
 import com.gabrielferreira.aplicativo.services.exceptions.DataIntegrityException;
 import com.gabrielferreira.aplicativo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,12 @@ public class ClienteService {
     private BCryptPasswordEncoder senhaEncodada;
 
     public Cliente obter(Integer id) {
+
+        Usuario usuario = UserService.authenticated();
+        if (usuario == null || !usuario.hasRole(Perfil.ADMIN) && !id.equals(usuario.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
         Optional<Cliente> cliente = clienteRepository.findById(id);
         return cliente.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado! Id: " + id +
                 ", Tipo: " + Cliente.class.getName()));
