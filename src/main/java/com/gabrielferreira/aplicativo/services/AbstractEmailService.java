@@ -1,5 +1,6 @@
 package com.gabrielferreira.aplicativo.services;
 
+import com.gabrielferreira.aplicativo.dominio.Cliente;
 import com.gabrielferreira.aplicativo.dominio.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,5 +71,21 @@ public abstract class AbstractEmailService implements EmailService {
         mimeMessageHelper.setText(criarTemplateHtmlConfirmacaoPedido(pedido), true);
 
         return mimeMessage;
+    }
+
+    @Override
+    public void enviarEmailNovaSenha(Cliente cliente, String novaSenha) {
+        SimpleMailMessage emailNovaSenha = criarEmailNovaSenha(cliente, novaSenha);
+        enviarEmail(emailNovaSenha);
+    }
+
+    protected SimpleMailMessage criarEmailNovaSenha(Cliente cliente, String novaSenha) {
+        SimpleMailMessage emailNovaSenha = new SimpleMailMessage();
+        emailNovaSenha.setTo(cliente.getEmail());
+        emailNovaSenha.setFrom(remetente);
+        emailNovaSenha.setSubject("Criar nova senha");
+        emailNovaSenha.setSentDate(new Date(System.currentTimeMillis()));
+        emailNovaSenha.setText("Nova senha: " + novaSenha);
+        return emailNovaSenha;
     }
 }

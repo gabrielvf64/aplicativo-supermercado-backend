@@ -1,5 +1,6 @@
 package com.gabrielferreira.aplicativo.services;
 
+import com.gabrielferreira.aplicativo.dominio.Cliente;
 import com.gabrielferreira.aplicativo.dominio.Pedido;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -14,4 +15,6 @@ public interface EmailService {
     void enviarEmailHtmlConfirmacaoPedido(Pedido pedido);
 
     void enviarEmailHtml(MimeMessage mimeMessage);
+
+    void enviarEmailNovaSenha(Cliente cliente, String novaSenha);
 }
