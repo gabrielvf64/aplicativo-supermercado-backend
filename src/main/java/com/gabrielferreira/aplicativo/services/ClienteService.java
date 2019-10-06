@@ -21,7 +21,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +38,9 @@ public class ClienteService {
 
     @Autowired
     private BCryptPasswordEncoder senhaEncodada;
+
+    @Autowired
+    private AmazonS3Service amazonS3Service;
 
     public Cliente obter(Integer id) {
 
@@ -110,6 +115,10 @@ public class ClienteService {
         }
 
         return cliente;
+    }
+
+    public URI uploadFotoPerfil(MultipartFile multipartFile) {
+        return amazonS3Service.uploadArquivo(multipartFile);
     }
 
     private void atualizarDados(Cliente novoCliente, Cliente cliente) {
