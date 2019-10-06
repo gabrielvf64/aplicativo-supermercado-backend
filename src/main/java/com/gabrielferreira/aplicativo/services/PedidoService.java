@@ -1,5 +1,6 @@
 package com.gabrielferreira.aplicativo.services;
 
+import com.gabrielferreira.aplicativo.dominio.Cliente;
 import com.gabrielferreira.aplicativo.dominio.ItemPedido;
 import com.gabrielferreira.aplicativo.dominio.PagamentoComBoleto;
 import com.gabrielferreira.aplicativo.dominio.Pedido;
@@ -7,8 +8,13 @@ import com.gabrielferreira.aplicativo.dominio.enums.EstadoPagamento;
 import com.gabrielferreira.aplicativo.repositories.ItemPedidoRepository;
 import com.gabrielferreira.aplicativo.repositories.PagamentoRepository;
 import com.gabrielferreira.aplicativo.repositories.PedidoRepository;
+import com.gabrielferreira.aplicativo.seguranca.Usuario;
+import com.gabrielferreira.aplicativo.services.exceptions.AuthorizationException;
 import com.gabrielferreira.aplicativo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -71,5 +77,18 @@ public class PedidoService {
         emailService.enviarEmailHtmlConfirmacaoPedido(pedido);
 
         return pedido;
+    }
+
+    public Page<Pedido> obterPagina(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        Usuario usuario = UserService.authenticated();
+
+        if (usuario == null) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        Cliente cliente = clienteService.obter(usuario.getId());
+
+        return pedidoRepository.findByCliente(cliente, pageRequest);
     }
 }
