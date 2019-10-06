@@ -2,6 +2,7 @@ package com.gabrielferreira.aplicativo.services;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.gabrielferreira.aplicativo.services.exceptions.FileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class AmazonS3Service {
             String contentType = multipartFile.getContentType();
             return uploadArquivo(nomeArquivo, inputStream, contentType);
         } catch (IOException e) {
-            throw new RuntimeException("Erro de IO: " + e.getMessage());
+            throw new FileException("Erro de IO: " + e.getMessage());
         }
     }
 
@@ -45,7 +46,7 @@ public class AmazonS3Service {
             logger.info("Upload concluído.");
             return s3client.getUrl(nomeBucket, nomeArquivo).toURI();
         } catch (URISyntaxException e) {
-            throw new RuntimeException("Erro ao converter URL para URI");
+            throw new FileException("Erro ao converter URL para URI");
         }
     }
 }
