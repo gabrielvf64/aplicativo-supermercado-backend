@@ -118,7 +118,19 @@ public class ClienteService {
     }
 
     public URI uploadFotoPerfil(MultipartFile multipartFile) {
-        return amazonS3Service.uploadArquivo(multipartFile);
+        Usuario usuario = UserService.authenticated();
+
+        if (usuario == null) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        URI uri = amazonS3Service.uploadArquivo(multipartFile);
+
+        Cliente cliente = obter(usuario.getId());
+        cliente.setUrlImagem(uri.toString());
+        clienteRepository.save(cliente);
+
+        return uri;
     }
 
     private void atualizarDados(Cliente novoCliente, Cliente cliente) {
