@@ -30,6 +30,12 @@ public class ClienteController {
         return ResponseEntity.ok().body(cliente);
     }
 
+    @RequestMapping(value = "/email", method = RequestMethod.GET)
+    public ResponseEntity<Cliente> obter(@RequestParam(value = "value") String email) {
+        Cliente cliente = clienteService.obterPorEmail(email);
+        return ResponseEntity.ok().body(cliente);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> criar(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
         Cliente cliente = clienteService.converteDTO(clienteNewDTO);

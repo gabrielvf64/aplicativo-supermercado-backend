@@ -98,6 +98,23 @@ public class ClienteService {
         return clienteRepository.findAll(pageRequest);
     }
 
+    public Cliente obterPorEmail(String email) {
+        Usuario usuario = UserService.authenticated();
+
+        if (usuario == null || !usuario.hasRole(Perfil.ADMIN) && !email.equals(usuario.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        Cliente cliente = clienteRepository.findByEmail(email);
+
+        if (cliente == null) {
+            throw new ObjectNotFoundException("Objeto não encontrado! Id: " + usuario.getId() + "Tipo: " +
+                    Cliente.class.getName());
+        }
+
+        return cliente;
+    }
+
     public Cliente converteDTO(ClienteDTO clienteDTO) {
         return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(), null,
                 null, null);
