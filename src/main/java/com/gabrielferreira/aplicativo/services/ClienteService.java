@@ -14,6 +14,7 @@ import com.gabrielferreira.aplicativo.services.exceptions.AuthorizationException
 import com.gabrielferreira.aplicativo.services.exceptions.DataIntegrityException;
 import com.gabrielferreira.aplicativo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +43,12 @@ public class ClienteService {
 
     @Autowired
     private AmazonS3Service amazonS3Service;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
 
     public Cliente obter(Integer id) {
 
@@ -124,13 +132,11 @@ public class ClienteService {
             throw new AuthorizationException("Acesso negado");
         }
 
-        URI uri = amazonS3Service.uploadArquivo(multipartFile);
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        String fileName = prefix + usuario.getId() + ".jpg";
 
-        Cliente cliente = obter(usuario.getId());
-        cliente.setUrlImagem(uri.toString());
-        clienteRepository.save(cliente);
-
-        return uri;
+        return amazonS3Service.uploadArquivo(fileName, imageService.getInputStream(jpgImage, "jpg"),
+                "image");
     }
 
     private void atualizarDados(Cliente novoCliente, Cliente cliente) {
