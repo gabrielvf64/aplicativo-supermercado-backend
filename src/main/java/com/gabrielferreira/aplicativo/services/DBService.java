@@ -48,13 +48,13 @@ public class DBService {
 
     public void instanciarBancoDeTeste() throws ParseException {
 
-        Categoria categoria1 = new Categoria(null, "Bebidas");
-        Categoria categoria2 = new Categoria(null, "Natural");
+        Categoria categoria1 = new Categoria(null, "Frutas");
+        Categoria categoria2 = new Categoria(null, "Laticínios");
         Categoria categoria3 = new Categoria(null, "Açougue");
-        Categoria categoria4 = new Categoria(null, "Laticínios");
-        Categoria categoria5 = new Categoria(null, "Higiene");
+        Categoria categoria4 = new Categoria(null, "Higiene");
+        Categoria categoria5 = new Categoria(null, "Bebidas");
         Categoria categoria6 = new Categoria(null, "Peixaria");
-        Categoria categoria7 = new Categoria(null, "Frutas");
+        Categoria categoria7 = new Categoria(null, "Vinhos");
 
 
         Produto produto1 = new Produto(null, "Coca-cola", 5.00);
