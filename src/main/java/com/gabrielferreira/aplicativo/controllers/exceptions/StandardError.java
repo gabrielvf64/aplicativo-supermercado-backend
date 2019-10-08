@@ -10,18 +10,21 @@ import java.io.Serializable;
 public class StandardError implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer status;
-    private String mensagem;
     private Long timeStamp;
+    private Integer status;
+    private String erro;
+    private String mensagem;
+    private String path;
 
     public StandardError() {
     }
 
-    public StandardError(Integer status, String mensagem, Long timeStamp) {
+    public StandardError(Long timeStamp, Integer status, String erro, String mensagem, String path) {
         super();
-        this.status = status;
-        this.mensagem = mensagem;
         this.timeStamp = timeStamp;
+        this.status = status;
+        this.erro = erro;
+        this.mensagem = mensagem;
+        this.path = path;
     }
-
 }
