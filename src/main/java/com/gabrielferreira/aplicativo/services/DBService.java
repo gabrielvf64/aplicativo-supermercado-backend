@@ -54,8 +54,6 @@ public class DBService {
         Categoria categoria4 = new Categoria(null, "Higiene");
         Categoria categoria5 = new Categoria(null, "Bebidas");
         Categoria categoria6 = new Categoria(null, "Peixaria");
-        Categoria categoria7 = new Categoria(null, "Vinhos");
-
 
         Produto produto1 = new Produto(null, "Coca-cola", 5.00);
         Produto produto2 = new Produto(null, "Guaraná", 4.50);
@@ -69,29 +67,27 @@ public class DBService {
         Produto produto10 = new Produto(null, "Melancia", 5.00);
         Produto produto11 = new Produto(null, "Laranja", 5.00);
 
-
-        categoria1.getProdutos().addAll(Arrays.asList(produto1, produto2, produto3));
-        categoria2.getProdutos().addAll(Arrays.asList(produto3));
+        categoria1.getProdutos().addAll(Arrays.asList(produto8, produto9, produto10, produto11));
+        categoria2.getProdutos().addAll(Arrays.asList(produto5));
         categoria3.getProdutos().addAll(Arrays.asList(produto4));
-        categoria4.getProdutos().addAll(Arrays.asList(produto5));
-        categoria5.getProdutos().addAll(Arrays.asList(produto6));
+        categoria4.getProdutos().addAll(Arrays.asList(produto6));
+        categoria5.getProdutos().addAll(Arrays.asList(produto1, produto2, produto3));
         categoria6.getProdutos().addAll(Arrays.asList(produto7));
-        categoria7.getProdutos().addAll(Arrays.asList(produto8, produto9, produto10, produto11));
 
-        produto1.getCategorias().addAll(Arrays.asList(categoria1));
-        produto2.getCategorias().addAll(Arrays.asList(categoria1));
-        produto3.getCategorias().addAll(Arrays.asList(categoria1, categoria2));
+        produto1.getCategorias().addAll(Arrays.asList(categoria5));
+        produto2.getCategorias().addAll(Arrays.asList(categoria5));
+        produto3.getCategorias().addAll(Arrays.asList(categoria5));
         produto4.getCategorias().addAll(Arrays.asList(categoria3));
-        produto5.getCategorias().addAll(Arrays.asList(categoria4));
-        produto6.getCategorias().addAll(Arrays.asList(categoria5));
+        produto5.getCategorias().addAll(Arrays.asList(categoria2));
+        produto6.getCategorias().addAll(Arrays.asList(categoria4));
         produto7.getCategorias().addAll(Arrays.asList(categoria6));
-        produto8.getCategorias().addAll(Arrays.asList(categoria7));
-        produto9.getCategorias().addAll(Arrays.asList(categoria7));
-        produto10.getCategorias().addAll(Arrays.asList(categoria7));
-        produto11.getCategorias().addAll(Arrays.asList(categoria7));
+        produto8.getCategorias().addAll(Arrays.asList(categoria1));
+        produto9.getCategorias().addAll(Arrays.asList(categoria1));
+        produto10.getCategorias().addAll(Arrays.asList(categoria1));
+        produto11.getCategorias().addAll(Arrays.asList(categoria1));
 
         categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2, categoria3, categoria4, categoria5,
-                categoria6, categoria7));
+                categoria6));
         produtoRepository.saveAll(Arrays.asList(produto1, produto2, produto3, produto4, produto5, produto6, produto7,
                 produto8, produto9, produto10, produto11));
 
